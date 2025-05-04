@@ -31,6 +31,7 @@ func main() {
 
 	router := mux.NewRouter()
 	router.HandleFunc("/department", handler.CreateDepartment).Methods("POST")
+	router.HandleFunc("/employee", handler.CreateEmployee).Methods("POST")
 
 	corsOptions := handlers.AllowedOrigins([]string{"http://localhost:3000"})
 	corsMethods := handlers.AllowedMethods([]string{"POST", "GET", "PUT", "DELETE"})

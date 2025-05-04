@@ -12,6 +12,7 @@ type repository struct {
 
 type Repository interface {
 	InsertDepartment(entity entities.Department) error
+	InsertEmployee(entity entities.Employee) error
 }
 
 func NewRepository(db *sql.DB) Repository {
@@ -28,6 +29,30 @@ var insertDepartment = `
 		?,
 		?,
 		NOW(),
+		?
+	);
+`
+
+var InsertEmployee = `
+	INSERT INTO employees (
+		name,
+		age,
+		salary,
+		created_at,
+		hiring_date,
+		dismissal_date,
+		department,
+		job_title,
+		active
+	) VALUES (
+	 	?,
+		?,
+		NOW(),
+		?,
+		?,
+		?,
+		?,
+		?,
 		?
 	);
 `
@@ -60,5 +85,35 @@ func (r repository) InsertDepartment(entity entities.Department) error {
 	}
 
 	logs.Info.Println("1 Row inserted into table 'departments'")
+	return nil
+}
+
+func (r repository) InsertEmployee(entity entities.Employee) error {
+	tx, err := r.db.Begin()
+	if err != nil {
+		return err
+	}
+
+	stm, err := tx.Prepare(insertDepartment)
+	if err != nil {
+		return err
+	}
+
+	defer stm.Close()
+
+	_, err = stm.Exec(
+		entity.Name,
+		entity.Active,
+	)
+	if err != nil {
+		return err
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return err
+	}
+
+	logs.Info.Println("1 Row inserted into table 'employees'")
 	return nil
 }
