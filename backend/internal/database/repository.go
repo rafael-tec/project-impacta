@@ -33,23 +33,21 @@ var insertDepartment = `
 	);
 `
 
-var InsertEmployee = `
+var insertEmployee = `
 	INSERT INTO employees (
 		name,
 		age,
 		salary,
 		created_at,
 		hiring_date,
-		dismissal_date,
-		department,
+		department_id,
 		job_title,
 		active
 	) VALUES (
 	 	?,
 		?,
+		?,
 		NOW(),
-		?,
-		?,
 		?,
 		?,
 		?,
@@ -62,6 +60,8 @@ func (r repository) InsertDepartment(entity entities.Department) error {
 	if err != nil {
 		return err
 	}
+
+	defer tx.Rollback()
 
 	stm, err := tx.Prepare(insertDepartment)
 	if err != nil {
@@ -94,7 +94,9 @@ func (r repository) InsertEmployee(entity entities.Employee) error {
 		return err
 	}
 
-	stm, err := tx.Prepare(insertDepartment)
+	defer tx.Rollback()
+
+	stm, err := tx.Prepare(insertEmployee)
 	if err != nil {
 		return err
 	}
@@ -103,6 +105,11 @@ func (r repository) InsertEmployee(entity entities.Employee) error {
 
 	_, err = stm.Exec(
 		entity.Name,
+		entity.Age,
+		entity.Salary,
+		entity.HiringDate,
+		entity.DepartmentID,
+		entity.JobTitle,
 		entity.Active,
 	)
 	if err != nil {

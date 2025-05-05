@@ -7,12 +7,12 @@ type CreateDepartmentRequest struct {
 }
 
 type CreateEmployeeRequest struct {
-	Name          string  `json:"name"`
-	Age           int     `json:"age"`
-	Salary        float64 `json:"salary"`
-	HiringDate    string  `json:"hiring_date"`
-	DismissalDate string  `json:"dismissal_date"`
-	DepartmentID  string  `json:"department_id"`
-	JobTitle      string  `json:"job_title"`
-	Active        bool    `json:"active"`
+	Name          string `json:"name"`
+	Age           string `json:"age"`
+	Salary        string `json:"salary"`
+	HiringDate    string `json:"hiring_date"`
+	DismissalDate string `json:"dismissal_date"`
+	DepartmentID  string `json:"department_id"`
+	JobTitle      string `json:"job_title"`
+	Active        bool   `json:"active"`
 }

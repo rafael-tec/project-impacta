@@ -56,7 +56,6 @@ func (h EmployeeHandler) CreateEmployee(w http.ResponseWriter, r *http.Request) 
 		request.Age,
 		request.Salary,
 		request.HiringDate,
-		request.DismissalDate,
 		request.DepartmentID,
 		request.JobTitle,
 		request.Active,

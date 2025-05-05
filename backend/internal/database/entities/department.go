@@ -9,7 +9,7 @@ type Department struct {
 
 type Employee struct {
 	Name          string
-	Age           int
+	Age           int64
 	Salary        float64
 	HiringDate    string
 	DismissalDate string

@@ -3,6 +3,7 @@ package service
 import (
 	"admin-employee/internal/database"
 	"admin-employee/internal/database/entities"
+	"strconv"
 )
 
 type HRService interface {
@@ -14,10 +15,9 @@ type HRService interface {
 
 	CreateEmployee(
 		name string,
-		age int,
-		salary float64,
+		age string,
+		salary string,
 		hiringDate string,
-		dismissalDate string,
 		departmentID string,
 		jobTitle string,
 		active bool,
@@ -51,23 +51,31 @@ func (s hrService) CreateDepartment(
 
 func (s hrService) CreateEmployee(
 	name string,
-	age int,
-	salary float64,
+	age string,
+	salary string,
 	hiringDate string,
-	dismissalDate string,
 	departmentID string,
 	jobTitle string,
 	active bool,
 ) error {
+	ageInt, err := strconv.ParseInt(age, 10, 64)
+	if err != nil {
+		return err
+	}
+
+	salaryFloat, err := strconv.ParseFloat(salary, 64)
+	if err != nil {
+		return err
+	}
+
 	entity := entities.Employee{
-		Name:          name,
-		Age:           age,
-		Salary:        salary,
-		HiringDate:    hiringDate,
-		DismissalDate: dismissalDate,
-		DepartmentID:  departmentID,
-		JobTitle:      jobTitle,
-		Active:        active,
+		Name:         name,
+		Age:          ageInt,
+		Salary:       salaryFloat,
+		HiringDate:   hiringDate,
+		DepartmentID: departmentID,
+		JobTitle:     jobTitle,
+		Active:       active,
 	}
 
 	if err := s.repo.InsertEmployee(entity); err != nil {

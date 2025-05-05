@@ -1,41 +1,76 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-import './App.css'
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useState } from "react";
 import DepartmentForm from "./components/DepartmentForm";
+import EmployeeForm from "./components/EmployeeForm";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 function App() {
-  // const [count, setCount] = useState(0)
+  const [activeView, setActiveView] = useState("employee");
 
   return (
-    <>
-     <div className="App">
-            <DepartmentForm />
+    <div className="app-layout" style={{ display: "flex", height: "100vh", fontFamily: "Arial, sans-serif" }}>
+      {/* Menu Lateral */}
+      <aside style={{
+        width: "250px",
+        backgroundColor: "#000",
+        color: "#fff",
+        padding: "2rem 1rem",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+      }}>
+        {/* Logo/Ícone */}
+        <div style={{
+          width: 80,
+          height: 80,
+          backgroundColor: "#808000",
+          borderRadius: "50%",
+          marginBottom: "2rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "2rem",
+          fontWeight: "bold"
+        }}>
+          RD
         </div>
-      {/* <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+
+        <button
+          onClick={() => setActiveView("employee")}
+          style={{
+            backgroundColor: activeView === "employee" ? "#808000" : "#333",
+            color: "#fff",
+            border: "none",
+            width: "100%",
+            padding: "1rem",
+            marginBottom: "1rem",
+            cursor: "pointer"
+          }}
+        >
+          Cadastrar Funcionário
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p> */}
-    </>
-  )
+        <button
+          onClick={() => setActiveView("department")}
+          style={{
+            backgroundColor: activeView === "department" ? "#808000" : "#333",
+            color: "#fff",
+            border: "none",
+            width: "100%",
+            padding: "1rem",
+            cursor: "pointer"
+          }}
+        >
+          Cadastrar Departamento
+        </button>
+      </aside>
+
+      {/* Área de Conteúdo */}
+      <main style={{ flexGrow: 1, backgroundColor: "#f0f0f0", padding: "2rem" }}>
+        {activeView === "employee" && <EmployeeForm />}
+        {activeView === "department" && <DepartmentForm />}
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
