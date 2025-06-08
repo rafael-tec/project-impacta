@@ -6,14 +6,3 @@ type Department struct {
 	CratedAt    string
 	Active      bool
 }
-
-type Employee struct {
-	Name          string
-	Age           int64
-	Salary        float64
-	HiringDate    string
-	DismissalDate string
-	DepartmentID  string
-	JobTitle      string
-	Active        bool
-}

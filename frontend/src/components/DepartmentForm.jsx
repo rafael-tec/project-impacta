@@ -16,7 +16,7 @@ const DepartmentForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://172.17.0.1:8080/department", {
+            const response = await fetch("http://localhost:8080/department", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

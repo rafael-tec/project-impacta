@@ -1,11 +1,12 @@
 import { useState } from "react";
-import DepartmentForm from "./components/DepartmentForm";
 import EmployeeForm from "./components/EmployeeForm";
+import EmployeeList from "./components/EmployeeList";
+import DepartmentForm from "./components/DepartmentForm";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 function App() {
-  const [activeView, setActiveView] = useState("employee");
+  const [activeView, setActiveView] = useState("employee-form");
 
   return (
     <div className="app-layout" style={{ display: "flex", height: "100vh", fontFamily: "Arial, sans-serif" }}>
@@ -36,41 +37,53 @@ function App() {
         </div>
 
         <button
-          onClick={() => setActiveView("employee")}
-          style={{
-            backgroundColor: activeView === "employee" ? "#808000" : "#333",
-            color: "#fff",
-            border: "none",
-            width: "100%",
-            padding: "1rem",
-            marginBottom: "1rem",
-            cursor: "pointer"
-          }}
+          onClick={() => setActiveView("employee-list")}
+          style={menuStyle(activeView === "employee-list")}
+        >
+          Lista de Funcionários
+        </button>
+
+        <button
+          onClick={() => setActiveView("employee-form")}
+          style={menuStyle(activeView === "employee-form")}
         >
           Cadastrar Funcionário
         </button>
+
         <button
           onClick={() => setActiveView("department")}
-          style={{
-            backgroundColor: activeView === "department" ? "#808000" : "#333",
-            color: "#fff",
-            border: "none",
-            width: "100%",
-            padding: "1rem",
-            cursor: "pointer"
-          }}
+          style={menuStyle(activeView === "department")}
         >
           Cadastrar Departamento
         </button>
       </aside>
 
       {/* Área de Conteúdo */}
-      <main style={{ flexGrow: 1, backgroundColor: "#f0f0f0", padding: "2rem" }}>
-        {activeView === "employee" && <EmployeeForm />}
+      <main
+        style={{
+          flexGrow: 1,
+          backgroundColor: "#f0f0f0",
+          padding: "2rem",
+          overflowX: "auto",
+          width: "1600px",
+        }}
+      >
+        {activeView === "employee-form" && <EmployeeForm />}
+        {activeView === "employee-list" && <EmployeeList />}
         {activeView === "department" && <DepartmentForm />}
       </main>
     </div>
   );
 }
+
+const menuStyle = (isActive) => ({
+  backgroundColor: isActive ? "#808000" : "#333",
+  color: "#fff",
+  border: "none",
+  width: "100%",
+  padding: "1rem",
+  marginBottom: "1rem",
+  cursor: "pointer"
+});
 
 export default App;

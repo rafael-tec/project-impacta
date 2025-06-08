@@ -6,7 +6,6 @@ const EmployeeForm = () => {
     age: "",
     salary: "",
     hiring_date: "",
-    dismissal_date: "",
     department_id: "",
     job_title: "",
     active: true
@@ -26,7 +25,7 @@ const EmployeeForm = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://172.17.0.1:8080/employee", {
+      const response = await fetch("http://localhost:8080/employee", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
